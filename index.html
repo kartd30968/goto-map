@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在前往地圖...</title>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+    <p style="text-align: center; margin-top: 50px;">正在開啟 Google Maps...</p>
+
+    <script>
+        // 🔹【請修改這裡】貼上您剛剛複製的 Google Maps 連結
+        const myMapUrl = "https://maps.app.goo.gl/4dBbtKoyrpy44K457";
+
+        function redirect() {
+            // 🔹【請修改這裡】這裡填入我們等等會拿到的 "新 LIFF ID"
+            liff.init({ liffId: "您的_新_LIFF_ID" })
+            .then(() => {
+                liff.openWindow({
+                    url: myMapUrl,
+                    external: true // 關鍵：強制用外部瀏覽器開啟，才能喚醒 Google Maps App
+                });
+            })
+            .catch((err) => {
+                // 如果出錯，直接轉址
+                window.location.href = myMapUrl;
+            });
+        }
+
+        window.onload = function() {
+            if (!navigator.userAgent.includes("Line")) {
+                // 如果不是在 LINE 裡面開，直接轉
+                window.location.href = myMapUrl;
+            } else {
+                redirect();
+            }
+        };
+    </script>
+</body>
+</html>
